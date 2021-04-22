@@ -1,0 +1,50 @@
+{
+  "name": "DLS-attendance-system",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/AmaliaCaldare/DLS-attendance-system.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "rules": {
+      "brace-style": [
+        "error",
+        "stroustrup"
+      ],
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "no-unused-vars": [
+        "error"
+      ],
+      "no-var": [
+        "error"
+      ],
+      "one-var": [
+        "off"
+      ],
+      "no-const-assign": [
+        "error"
+      ],
+      "quotes": [
+        "error",
+        "backtick"
+      ]
+    }
+  }
+}
