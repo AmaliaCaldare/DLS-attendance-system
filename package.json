@@ -1,13 +1,18 @@
 {
   "name": "DLS-attendance-system",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/app.js",
   "repository": "https://github.com/AmaliaCaldare/DLS-attendance-system.git",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js | bunyan",
     "lint": "eslint ./src",
     "babel": "babel"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "config": "^3.3.6",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
