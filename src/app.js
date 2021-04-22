@@ -1,13 +1,8 @@
-import express from 'express';
-import config from 'config';
-import bodyparser from 'body-parser';
+// eslint-disable-next-line import/extensions
+import "regenerator-runtime/runtime.js";
 
-const app = express();
-const port = config.get("port");
+import smacker from 'smacker';
 
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(express.static('public'));
+import service from './service';
 
-const server = app.listen(port);
-
+smacker.start({ service });
