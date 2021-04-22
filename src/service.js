@@ -6,6 +6,7 @@ import config from 'config';
 import bodyparser from 'body-parser';
 
 import routes from './api/routes';
+import firebaseService from './api/services/firebaseService';
 
 let service;
 const start = async () => {
@@ -20,14 +21,14 @@ const start = async () => {
 
   service = app.listen(port);
   console.log("Now listening to port", port);
-}
 
-const stop = async() => {
- await service.close();
+  await firebaseService.setup();
+};
+
+const stop = async () => {
+  await service.close();
 };
 
 export default {
   start, stop
-}
-
-
+};
