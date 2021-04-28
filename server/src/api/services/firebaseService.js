@@ -9,7 +9,7 @@ const setup = async () => {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
   });
-   db = admin.firestore();
+  db = admin.firestore();
 };
 
 export default {
