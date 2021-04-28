@@ -5,9 +5,9 @@
   "repository": "https://github.com/AmaliaCaldare/DLS-attendance-system.git",
   "license": "MIT",
   "scripts": {
-    "dev": "../node_modules/.bin/nodemon --exec babel-node server/src/app.js | bunyan",
-    "lint": "../node_modules/.bin/eslint server/src",
-    "babel": "../node_modules/.bin/babel"
+    "dev": "nodemon --exec babel-node src/app.js | bunyan",
+    "lint": "eslint ./src",
+    "babel": "babel"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
