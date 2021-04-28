@@ -11,19 +11,19 @@ const setup = async () => {
 };
 
 const createCourse = async (name, teacherId, students) => {
-  await db.collection(`course`)
+  await db.collection(`courses`)
     .add({ name, teacherId, students });
 };
 
 const createClass = async (date, startTime, endTime, courseId, attendanceList) => {
-  await db.collection(`class`)
+  await db.collection(`classes`)
     .add({
       date, startTime, endTime, courseId, attendanceList
     });
 };
 
 const createUser = async (name, role, email) => {
-  await db.collection(`user`)
+  await db.collection(`users`)
     .add({ role, email });
 };
 
