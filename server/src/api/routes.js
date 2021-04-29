@@ -10,5 +10,5 @@ export default (app) => {
   app.post(`/api/classes`, classes.createClass);
   app.post(`/api/users`, users.createUser);
 
-  app.get(`/api/course/students`, courses.getCourseStudents);
+  app.get(`/api/courses/get`, courses.getCourses);
 };

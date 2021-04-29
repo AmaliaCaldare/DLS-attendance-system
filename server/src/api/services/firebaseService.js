@@ -28,15 +28,20 @@ const createUser = async (name, role, email) => {
     .add({ role, email });
 };
 
-const getCourseStudents = async () => {
-  const students = await db.collection(`courses`).get();
-
-  return students;
+const getCourses = async () => {
+  const coursesRef = db.collection(`courses`);
+  const courses = await coursesRef.get();
+  // courses.forEach(async (course) => {
+  //   const courseName = course.data().name;
+  //   console.log(courseName);
+  // });
+  return Promise.all(courses);
 };
+
 export default {
   setup,
   createCourse,
   createClass,
   createUser,
-  getCourseStudents
+  getCourses
 };

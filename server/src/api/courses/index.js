@@ -1,8 +1,8 @@
 import serverErrorSafe from '../../utils/serverErrorSafe';
 import createCourse from './createCourse';
-import getCourseStudents from './getCourseStudents';
+import getCourses from './getCourses';
 
 export default {
   createCourse: serverErrorSafe(createCourse),
-  getCourseStudents: serverErrorSafe(getCourseStudents)
+  getCourses: serverErrorSafe(getCourses)
 };
