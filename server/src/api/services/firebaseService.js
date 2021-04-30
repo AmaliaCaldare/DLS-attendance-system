@@ -29,13 +29,13 @@ const createUser = async (name, role, email) => {
 };
 
 const getCourses = async () => {
-  const coursesRef = db.collection(`courses`);
-  const courses = await coursesRef.get();
+  // const coursesRef = db.collection(`courses`);
+  const courses = await db.collection(`courses`).get();
   // courses.forEach(async (course) => {
   //   const courseName = course.data().name;
   //   console.log(courseName);
   // });
-  return Promise.all(courses);
+  return courses;
 };
 
 export default {
