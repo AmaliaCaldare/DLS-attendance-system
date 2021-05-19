@@ -26,7 +26,6 @@ const start = async () => {
 };
 
 const stop = async () => {
-  // await mongodbService.close();
   await service.close();
 };
 

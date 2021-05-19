@@ -12,10 +12,6 @@ const connect = async () => {
   db = client.db(`dls-attendance-system`);
 };
 
-const close = async () => {
-  await client.close();
-};
-
 const createCourse = async (name, teacherId, students) => {
   await db.collection(`courses`)
     .insertOne({ name, teacherId, students });
@@ -62,7 +58,6 @@ const getClasses = async () => {
 
 export default {
   connect,
-  close,
   createCourse,
   createClass,
   createUser,
