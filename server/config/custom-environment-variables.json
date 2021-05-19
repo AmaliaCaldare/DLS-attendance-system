@@ -1,3 +1,4 @@
 {
-  "port": "PORT"
+  "port": "PORT",
+  "mongodbUri": "MONGODB_URI"
 }
