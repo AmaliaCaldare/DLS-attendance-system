@@ -6,7 +6,7 @@ let db;
 const connect = async () => {
   const uri = `${config.get(`mongodbUri`)}`;
 
-  client = await MongoClient(uri);
+  client = await MongoClient(uri, { useUnifiedTopology: true });
   await client.connect();
 
   db = client.db(`dls-attendance-system`);
@@ -34,27 +34,30 @@ const createUser = async (name, role, email) => {
 };
 
 const getCourses = async () => {
-  const result = await db.collection(`courses`).find();
+  const courses = await db.collection(`courses`).find().toArray();
 
-  console.log(result);
-
-  return result;
+  if (courses.length > 0) {
+    return courses;
+  }
+  return null;
 };
 
 const getUsers = async () => {
-  const result = await db.collection(`users`).find();
+  const users = await db.collection(`users`).find().toArray();
 
-  console.log(result);
-
-  return result;
+  if (users.length > 0) {
+    return users;
+  }
+  return null;
 };
 
 const getClasses = async () => {
-  const result = await db.collection(`classes`).find();
+  const classes = await db.collection(`classes`).find().toArray();
 
-  console.log(result);
-
-  return result;
+  if (classes.length > 0) {
+    return classes;
+  }
+  return null;
 };
 
 export default {
