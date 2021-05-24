@@ -1,9 +1,9 @@
-import firebaseService from "../services/firebaseService";
+import mongodbService from '../services/mongodbService';
 
 const createCourse = async (req, res) => {
   const { name, teacherId, students } = req.body;
 
-  await firebaseService.createCourse(name, teacherId, students);
+  await mongodbService.createCourse(name, teacherId, students);
 
   // check course was created
   res.status(200).send();

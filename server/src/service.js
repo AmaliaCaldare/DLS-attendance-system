@@ -6,11 +6,11 @@ import config from 'config';
 import bodyparser from 'body-parser';
 
 import routes from './api/routes';
-import firebaseService from './api/services/firebaseService';
+import mongodbService from './api/services/mongodbService';
 
 let service;
 const start = async () => {
-  await firebaseService.setup();
+  await mongodbService.connect();
 
   const app = express();
   const port = config.get(`port`);
