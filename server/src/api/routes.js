@@ -13,4 +13,6 @@ export default (app) => {
   app.get(`/api/courses/get`, courses.getCourses);
   app.get(`/api/users/get`, users.getUsers);
   app.get(`/api/classes/get`, classes.getClasses);
+  app.get(`/api/teachers/get`, users.getTeachers);
+  app.get(`/api/students/get`, users.getStudents);
 };

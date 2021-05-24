@@ -26,7 +26,7 @@ const createClass = async (date, startTime, endTime, courseId, attendanceList) =
 
 const createUser = async (name, role, email) => {
   await db.collection(`users`)
-    .insertOne({ role, email });
+    .insertOne({ name, role, email });
 };
 
 const getCourses = async () => {
@@ -47,6 +47,24 @@ const getUsers = async () => {
   return null;
 };
 
+const getTeachers = async () => {
+  const teachers = await db.collection(`users`).find({ role: `teacher` }).toArray();
+
+  if (teachers.length > 0) {
+    return teachers;
+  }
+  return null;
+};
+
+const getStudents = async () => {
+  const students = await db.collection(`users`).find({ role: `student` }).toArray();
+
+  if (students.length > 0) {
+    return students;
+  }
+  return null;
+};
+
 const getClasses = async () => {
   const classes = await db.collection(`classes`).find().toArray();
 
@@ -63,5 +81,7 @@ export default {
   createUser,
   getCourses,
   getUsers,
-  getClasses
+  getClasses,
+  getTeachers,
+  getStudents
 };
