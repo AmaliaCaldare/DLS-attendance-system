@@ -30,15 +30,18 @@ export default {
     methods: {
         getAllCourses(){
             getAllCourses().then(response => {
-                console.log(response);
-                console.log('loaded');
                 this.courses = response
             })
             
         }
     },
     created(){
-        //this.getAllCourses()
+        this.getAllCourses()
     }
 }
 </script>
+<style scoped>
+body{
+    background-color: #ECE9E9;
+}
+</style>
