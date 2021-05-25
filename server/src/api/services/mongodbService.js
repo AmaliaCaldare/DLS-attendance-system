@@ -13,15 +13,18 @@ const connect = async () => {
 };
 
 const createCourse = async (name, teacherId, students) => {
-  await db.collection(`courses`)
+  const course = await db.collection(`courses`)
     .insertOne({ name, teacherId, students });
+
+  return course.ops[0];
 };
 
 const createClass = async (date, startTime, endTime, courseId, attendanceList) => {
-  await db.collection(`classes`)
+  const newClass = await db.collection(`classes`)
     .insertOne({
       date, startTime, endTime, courseId, attendanceList
     });
+  return newClass.ops[0];
 };
 
 const createUser = async (name, role, email) => {

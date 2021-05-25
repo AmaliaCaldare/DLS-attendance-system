@@ -1,5 +1,6 @@
 const LoginPage = () => import("../views/Login.vue");
 const CreateCoursePage = () => import("../views/CreateCourse.vue");
+const CreateClassPage = () => import("../views/CreateClass.vue");
 const CoursesPage = () => import("../views/CoursesPage.vue");
 
 
@@ -23,6 +24,11 @@ const routes = [
         path: "/courses",
         name: "Courses",
         component: CoursesPage
+    },
+    {
+        path: "/create/class",
+        name: "Create Class",
+        component: CreateClassPage
     },
 ];
 

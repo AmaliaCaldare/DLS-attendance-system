@@ -3,11 +3,14 @@ export async function getAllCourses() {
     return await response.json();
 }
 
-export async function createCourse(name, teacherId, students){
-    const rawResponse = await fetch('/api/courses', {
+export async function createCourse(data = {}){
+    const response = await fetch('/api/courses', {
         method: 'POST',
-        body: JSON.stringify({name, teacherId, students})
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     });
-    const content = await rawResponse.json();
-    console.log(content);
+    return response.json();
 }

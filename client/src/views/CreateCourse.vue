@@ -82,21 +82,22 @@ export default {
             students: []
         }
     },
-    watch: {
-        'form.students': function (){
-         console.log(this.form.students);
-        },
-    },
+    // watch: {
+    //     'form.students': function (){
+    //      console.log(this.form.students);
+    //     },
+    // },
     methods: {
         onSubmit(event){
             event.preventDefault()
             const studentIds = [];
             this.form.students.forEach((student) => {
-                studentIds.push(student.id)
+                studentIds.push(student._id)
             });
-            createCourse(this.form.name, this.form.teacher, studentIds).then(response => {
-                console.log(response);
-            })
+            createCourse({name: this.form.name, teacherId: this.form.teacher, students: studentIds})
+                .then(data => {
+                    console.log(data);
+                })
 
 
         },
