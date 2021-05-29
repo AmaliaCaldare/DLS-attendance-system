@@ -1,5 +1,9 @@
 export async function getAllGroups() {
-    const response = await fetch('/api/groups/get');
+    const response = await fetch('/api/groups/get', {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
     return await response.json();
 }
 

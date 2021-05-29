@@ -5,13 +5,13 @@
     
             <b-navbar-nav>
                 <b-nav-item class="nav-tab" href="/courses" v-if="role ==='admin'">Courses</b-nav-item>
-                <b-nav-item class="nav-tab" href="#">Classes</b-nav-item>
+                <b-nav-item class="nav-tab" href="/classes">Classes</b-nav-item>
                 <b-nav-item class="nav-tab" href="#">Students</b-nav-item>
                 <b-nav-item class="nav-tab" href="#">Teachers</b-nav-item>
-                <b-nav-item class="nav-tab" href="#">Schedule</b-nav-item>
+                <b-nav-item class="nav-tab" href="/schedule">Schedule</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
-                <b-nav-item class="nav-tab ml-auto" href="#">Log out</b-nav-item>
+                <b-nav-item class="nav-tab ml-auto" @click="logout">Log out</b-nav-item>
             </b-navbar-nav>
 
 
@@ -26,8 +26,10 @@ export default {
         }
     },
     methods: {
-        
-            
+        logout() {
+            localStorage.clear();
+            this.$router.push('/login');
+        }        
     },
     created(){
         // set the user role
