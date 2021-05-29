@@ -11,10 +11,15 @@ const createClass = async (req, res) => {
     res.status(403).send({ error: `You are not authorized to make this request` });
     return;
   }
-  await mongodbService.createClass(date, startTime, endTime, courseId, attendanceList);
+  const newClass = await mongodbService
+    .createClass(date, startTime, endTime, courseId, attendanceList);
 
-  // check class was created;
-  res.status(200).send();
+  if (!newClass) {
+    res.status(500).send({ error: `Could not create class` });
+    return;
+  }
+
+  res.status(200).send(newClass);
 };
 
 export default createClass;

@@ -11,7 +11,7 @@ const login = async (req, res) => {
   }
 
   const accessToken = await authService.login(email, password, user.role);
-  res.status(200).send(accessToken);
+  res.status(200).send({ ...accessToken, role: user.role });
 };
 
 export default login;

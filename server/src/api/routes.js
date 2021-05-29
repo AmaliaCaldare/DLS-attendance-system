@@ -16,6 +16,7 @@ export default (app) => {
   app.get(`/api/courses/get`, authenticateJWT, courses.getCourses);
   app.get(`/api/users/get`, authenticateJWT, users.getUsers);
   app.get(`/api/classes/get`, classes.getClasses);
-
   app.post(`/api/login`, auth.login);
+  app.get(`/api/teachers/get`, users.getTeachers);
+  app.get(`/api/students/get`, users.getStudents);
 };

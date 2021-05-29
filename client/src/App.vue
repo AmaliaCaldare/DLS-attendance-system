@@ -1,27 +1,30 @@
 <template>
   <div id="app">
-    <courses-page></courses-page>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
-import CoursesPage from './components/CoursesPage.vue'
+// import Login from './views/Login.vue'
 
-export default {
-  name: 'App',
-  components: {
-    CoursesPage
-  }
-}
+// export default {
+//   name: 'App',
+//   components: {
+//     Login
+//   }
+// }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 60px; 
+}
+body{
+  background-color: #ECE9E9 !important;
 }
 </style>

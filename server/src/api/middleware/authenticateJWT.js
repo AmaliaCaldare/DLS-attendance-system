@@ -1,8 +1,6 @@
 import config from 'config';
 import jwt from 'jsonwebtoken';
 
-import mongodbService from '../services/mongodbService';
-
 const authenticateJWT = async (req, res, next) => {
   const accessTokenSecret = config.get(`accessTokenSecret`);
   const authHeader = req.headers.authorization;
