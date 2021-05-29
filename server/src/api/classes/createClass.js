@@ -2,7 +2,7 @@ import mongodbService from '../services/mongodbService';
 
 const createClass = async (req, res) => {
   const {
-    date, startTime, endTime, courseId, attendanceList
+    date, startTime, endTime, courseId, groupId, attendanceList
   } = req.body;
   const { role } = req.user;
   const allowedRoles = [`admin`];
@@ -12,7 +12,7 @@ const createClass = async (req, res) => {
     return;
   }
   const newClass = await mongodbService
-    .createClass(date, startTime, endTime, courseId, attendanceList);
+    .createClass(date, startTime, endTime, courseId, groupId, attendanceList);
 
   if (!newClass) {
     res.status(500).send({ error: `Could not create class` });

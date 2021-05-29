@@ -29,17 +29,30 @@
                         ></b-form-select>
                     </b-form-group>
 
-                    <b-form-group label="Group:" label-for="group" class="w-75">
-                        <b-form-select
-                            id="group"
-                            v-model="form.group"
+                    <b-form-group label="Groups:" label-for="group" class="w-75">
+                        <multiselect
+                            v-model="form.groups"
                             :options="groups"
+                            :multiple="true"
+                            label="name" 
+                            track-by="name" 
+                            :preselect-first="true"
+                            :close-on-select="false"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            placeholder="Select groups"
+                            open-direction="bottom"
                             required
-                            value-field="_id"
-                            text-field="name"
-                            class="create-input"
-                        ></b-form-select>
+                            class="mb-5 create-input">
+                            <template slot="selection" slot-scope="{ values, search, isOpen }">
+                                <span class="multiselect__single" 
+                                    v-if="values.length &amp;&amp; !isOpen">
+                                    {{ values.length }} options selected
+                                </span>
+                            </template>
+                        </multiselect>
                     </b-form-group>
+
                     <div class="text-center">
                         <b-button type="submit" class="create-btn">Create</b-button>
                     </div>
@@ -66,30 +79,25 @@ export default {
             form: {
                 name: "",
                 teacher: "",
-                group: ""
+                groups: []
             },
             teachers: [],
             groups: []
         }
     },
-    // watch: {
-    //     'form.students': function (){
-    //      console.log(this.form.students);
-    //     },
-    // },
     methods: {
         onSubmit(event){
             event.preventDefault()
-            const studentIds = [];
-            this.form.students.forEach((student) => {
-                studentIds.push(student._id)
+            const groupIds = [];
+            this.form.groups.forEach((group) => {
+                groupIds.push(group._id)
             });
-            createCourse({name: this.form.name, teacherId: this.form.teacher, students: studentIds})
+            createCourse({name: this.form.name, teacherId: this.form.teacher, groups: groupIds})
                 .then(data => {
                     console.log(data);
+                }).then(() => {
+                    this.$router.push('/courses')
                 })
-
-
         },
         getAllTeachers(){
             getTeachers().then(teachers => {

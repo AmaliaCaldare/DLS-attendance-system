@@ -2,7 +2,15 @@
     <div>
         <nav-bar></nav-bar>
         <b-container fluid class="text-center">
-            <h2>{{course}} Classes</h2>
+            <h2>Course's details</h2>
+            <h4>Course's name: {{course.name}}</h4>
+            <h4 v-if="userRole === 'admin' || userRole === 'student'">Teacher: {{teacher.name}}</h4>
+            <h4 v-if="userRole === 'admin' || userRole === 'teacher'">Groups: 
+                <span v-for="group in groups" :key="group._id">
+                    {{group.name}}
+                </span>
+            </h4>
+            <h2>{{course.name}}'s Classes</h2>
             <div class="pt-8 d-flex flex-column justify-content-between">
                 <b-button  v-for="courseClass in classes" :key="courseClass.id" class="lg font-weight-bold class-btn mt-3">
                     {{courseClass.date}} {{courseClass.startTime}}-{{courseClass.endTime}}
@@ -13,7 +21,10 @@
     </div>
 </template>
 <script>
-import {getClasses} from '../services/ClassService'
+import {getClassesByCourseId} from '../services/ClassService'
+import {getCourseById} from '../services/CourseService'
+import {getTeacherById} from '../services/UserService'
+import {getGroupById} from '../services/GroupService'
 import NavBar from '../components/NavBar.vue'
 import {checkToken} from '../services/AuthService'
 
@@ -25,22 +36,27 @@ export default {
     data(){
         return {
           classes: [],
-          course: ""
+          course: {},
+          teacher: {},
+          groups: [],
+          userRole: ""
         }
     },
     methods: {
-        getAllClasses(){
-            getClasses().then(response => {
-                this.classes = response
-            })
-            
-        }
     },
-    created(){
+    async created(){
         if(!checkToken(['admin', 'teacher'])) {
             this.$router.push('/login');
         } else {
-            this.getAllClasses()
+            this.userRole = localStorage.getItem('role')
+            this.course = await getCourseById(this.$route.params.courseId)
+            this.teacher = await getTeacherById(this.course.teacherId)
+            this.course.groups.forEach(async (groupId) => {
+                let group = await getGroupById(groupId)
+                this.groups.push(group)
+            });
+            this.classes = await getClassesByCourseId(this.course._id)
+
         }  
     }
 }

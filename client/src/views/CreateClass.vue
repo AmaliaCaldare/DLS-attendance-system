@@ -48,6 +48,19 @@
                             class="create-input"
                         ></b-form-select>
                     </b-form-group>
+
+                    <b-form-group label="Course:" label-for="course" class="w-75" v-if="form.course">
+                        <b-form-select
+                            id="course"
+                            v-model="form.group"
+                            :options="courseGroups"
+                            required
+                            value-field="_id"
+                            text-field="name"
+                            class="create-input"
+                        ></b-form-select>
+                    </b-form-group>
+
                     <div class="text-center">
                         <b-button type="submit" class="create-btn">Create</b-button>
                     </div>
@@ -59,8 +72,9 @@
 </template>
 <script>
 import NavBar from '../components/NavBar.vue'
-import {getAllCourses} from '../services/CourseService'
+import {getAllCourses, getCourseById} from '../services/CourseService'
 import {createClass} from '../services/ClassService'
+import {getGroupById} from '../services/GroupService'
 import {checkToken} from '../services/AuthService'
 
 
@@ -74,9 +88,11 @@ export default {
                 date: "",
                 startTime: "",
                 endTime: "",
-                course: ""
+                course: "",
+                group: ""
             },
-            courses: []
+            courses: [],
+            courseGroups: []
         }
     },
     
@@ -84,9 +100,9 @@ export default {
         onSubmit(event){
             event.preventDefault()
             createClass({date: this.form.date, startTime: this.form.startTime, 
-                endTime: this.form.endTime, courseId: this.form.course})
+                endTime: this.form.endTime, courseId: this.form.course, groupId: this.form.group})
                 .then(data => {
-                    console.log(data);
+                    this.$router.push(`/course/${data.courseId}/classes`)
                 })
 
         },
@@ -96,6 +112,20 @@ export default {
             })
         }
         
+    },
+    watch:{
+        'form.course': function (courseId){
+            if(courseId){
+                this.courseGroups = []
+                getCourseById(courseId).then(course => {
+                    course.groups.forEach(async (group) => {
+                        const courseGroup = await getGroupById(group)
+                        this.courseGroups.push(courseGroup)
+                    })
+                })
+            }
+            
+        },
     },
     created(){
         if(!checkToken(['admin', 'teacher'])) {
