@@ -4,7 +4,7 @@
             <b-navbar-brand class="kea" href="#">KEA</b-navbar-brand>
     
             <b-navbar-nav>
-                <b-nav-item class="nav-tab" href="#" v-if="role ==='admin'">Courses</b-nav-item>
+                <b-nav-item class="nav-tab" href="/courses" v-if="role ==='admin'">Courses</b-nav-item>
                 <b-nav-item class="nav-tab" href="#">Classes</b-nav-item>
                 <b-nav-item class="nav-tab" href="#">Students</b-nav-item>
                 <b-nav-item class="nav-tab" href="#">Teachers</b-nav-item>

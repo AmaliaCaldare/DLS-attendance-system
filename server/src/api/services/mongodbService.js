@@ -14,9 +14,9 @@ const connect = async () => {
   db = client.db(`dls-attendance-system`);
 };
 
-const createCourse = async (name, teacherId, students) => {
+const createCourse = async (name, teacherId, group) => {
   const course = await db.collection(`courses`)
-    .insertOne({ name, teacherId, students });
+    .insertOne({ name, teacherId, group });
 
   return course.ops[0];
 };
@@ -27,6 +27,14 @@ const createClass = async (date, startTime, endTime, courseId, attendanceList) =
       date, startTime, endTime, courseId, attendanceList
     });
   return newClass.ops[0];
+};
+
+const createGroup = async (name, students) => {
+  const newGroup = await db.collection(`groups`)
+    .insertOne({
+      name, students
+    });
+  return newGroup.ops[0];
 };
 
 const createUser = async (name, role, email, password) => {
@@ -50,6 +58,15 @@ const getCourses = async () => {
 
   if (courses.length > 0) {
     return courses;
+  }
+  return null;
+};
+
+const getGroups = async () => {
+  const groups = await db.collection(`groups`).find().toArray();
+
+  if (groups.length > 0) {
+    return groups;
   }
   return null;
 };
@@ -103,6 +120,7 @@ export default {
   connect,
   createCourse,
   createClass,
+  createGroup,
   createUser,
   getCourses,
   getUsers,
@@ -110,5 +128,6 @@ export default {
   getUserByEmail,
   checkUserPassword,
   getTeachers,
-  getStudents
+  getStudents,
+  getGroups
 };

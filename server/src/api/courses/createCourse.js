@@ -1,7 +1,7 @@
 import mongodbService from '../services/mongodbService';
 
 const createCourse = async (req, res) => {
-  const { name, teacherId, students } = req.body;
+  const { name, teacherId, group } = req.body;
   const { role } = req.user;
   const allowedRoles = [`admin`];
 
@@ -10,7 +10,7 @@ const createCourse = async (req, res) => {
     return;
   }
 
-  const course = await mongodbService.createCourse(name, teacherId, students);
+  const course = await mongodbService.createCourse(name, teacherId, group);
 
   if (!course) {
     res.status(500).send({ error: `Could not create coruse` });

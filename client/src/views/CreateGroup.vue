@@ -4,41 +4,40 @@
         <b-container fluid class="center">
             <b-card class="w-75 create-card">
                 <b-form @submit="onSubmit" class="m-4">
-                    <h3>Create course</h3>
-
-                    <b-form-group label="Course Name:" label-for="name" class="mt-5 w-75">
+                    <h3>Create group</h3>
+                    <b-form-group label="Group Name:" label-for="name" class="mt-5 w-75">
                         <b-form-input
                             id="name"
                             v-model="form.name"
                             type="text"
-                            placeholder="Enter course name"
+                            placeholder="Enter group name"
                             required
                             class="mb-4 create-input"
                         ></b-form-input>
                     </b-form-group>
 
-                    <b-form-group label="Teacher:" label-for="teacher" class="w-75">
-                        <b-form-select
-                            id="teacher"
-                            v-model="form.teacher"
-                            :options="teachers"
+                    <b-form-group label="Students:" label-for="students" class="w-75">
+                        <multiselect
+                            v-model="form.students"
+                            :options="students"
+                            :multiple="true"
+                            label="name" 
+                            track-by="name" 
+                            :preselect-first="true"
+                            :close-on-select="false"
+                            :clear-on-select="false"
+                            :preserve-search="true"
+                            placeholder="Select students"
+                            open-direction="bottom"
                             required
-                            value-field="_id"
-                            text-field="name"
-                            class="create-input"
-                        ></b-form-select>
-                    </b-form-group>
-
-                    <b-form-group label="Group:" label-for="group" class="w-75">
-                        <b-form-select
-                            id="group"
-                            v-model="form.group"
-                            :options="groups"
-                            required
-                            value-field="_id"
-                            text-field="name"
-                            class="create-input"
-                        ></b-form-select>
+                            class="mb-5 create-input">
+                            <template slot="selection" slot-scope="{ values, search, isOpen }">
+                                <span class="multiselect__single" 
+                                    v-if="values.length &amp;&amp; !isOpen">
+                                    {{ values.length }} options selected
+                                </span>
+                            </template>
+                        </multiselect>
                     </b-form-group>
                     <div class="text-center">
                         <b-button type="submit" class="create-btn">Create</b-button>
@@ -51,9 +50,8 @@
 </template>
 <script>
 import NavBar from '../components/NavBar.vue'
-import {getTeachers} from '../services/UserService'
-import {createCourse} from '../services/CourseService'
-import {getAllGroups} from '../services/GroupService'
+import {getStudents} from '../services/UserService'
+import {createGroup} from '../services/GroupService'
 
 
 export default {
@@ -64,11 +62,10 @@ export default {
         return {
             form: {
                 name: "",
-                teacher: "",
-                group: ""
+                students: []
             },
             teachers: [],
-            groups: []
+            students: []
         }
     },
     // watch: {
@@ -83,29 +80,22 @@ export default {
             this.form.students.forEach((student) => {
                 studentIds.push(student._id)
             });
-            createCourse({name: this.form.name, teacherId: this.form.teacher, students: studentIds})
+            createGroup({name: this.form.name, students: studentIds})
                 .then(data => {
                     console.log(data);
                 })
 
 
         },
-        getAllTeachers(){
-            getTeachers().then(teachers => {
-                this.teachers = teachers
-            })
-            
-        },
-        getAllGroups(){
-            getAllGroups().then(groups => {
-                this.groups = groups
+        getAllStudents(){
+            getStudents().then(students => {
+                this.students = students
             })  
         },
         
     },
     created(){
-        this.getAllTeachers()
-        this.getAllGroups()
+        this.getAllStudents()
     }
 }
 </script>
