@@ -1,5 +1,9 @@
 export async function getClasses() {
-    const response = await fetch('/api/classes/get');
+    const response = await fetch('/api/classes/get', {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
     return await response.json();
 }
 

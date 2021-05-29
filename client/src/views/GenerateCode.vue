@@ -15,6 +15,7 @@
 </template>
 <script>
 import NavBar from '../components/NavBar.vue'
+import {checkToken} from '../services/AuthService'
 
 
 export default {
@@ -50,7 +51,9 @@ export default {
         
     },
     created(){
-        
+        if(!checkToken(['admin', 'teacher'])) {
+            this.$router.push('/login');
+        }
     }
 }
 </script>

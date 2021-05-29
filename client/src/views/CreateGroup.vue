@@ -52,6 +52,7 @@
 import NavBar from '../components/NavBar.vue'
 import {getStudents} from '../services/UserService'
 import {createGroup} from '../services/GroupService'
+import {checkToken} from '../services/AuthService'
 
 
 export default {
@@ -95,7 +96,11 @@ export default {
         
     },
     created(){
-        this.getAllStudents()
+        if(!checkToken(['admin', 'teacher'])) {
+            this.$router.push('/login');
+        } else {
+            this.getAllStudents()
+        }   
     }
 }
 </script>
