@@ -25,11 +25,12 @@
                 </b-form>
             </b-card>
         </b-container>
-        
+
     </div>
 </template>
 <script>
 import NavBar from '../components/NavBar.vue'
+import { getAccessToken } from '../services/AuthService.js';
 
 
 export default {
@@ -40,15 +41,25 @@ export default {
         return {
             email: "",
             password: ""
-          
+
         }
     },
     methods: {
-        onSubmit(event){
-            event.preventDefault()
-
+      onSubmit(event){
+        let user = {
+          email: this.email,
+          password: this.password
         }
-        
+        getAccessToken(user).then(response => {
+          localStorage.setItem('token', response.accessToken);
+          localStorage.setItem('role', response.role)
+          this.$router.push('/courses')
+
+        })
+
+            event.preventDefault()
+      }
+
     },
     created(){
     }
@@ -67,7 +78,7 @@ export default {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    
+
 }
 .navy{
     color: #161966;
