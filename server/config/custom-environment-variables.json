@@ -1,4 +1,5 @@
 {
   "port": "PORT",
-  "mongodbUri": "MONGODB_URI"
+  "mongodbUri": "MONGODB_URI",
+  "accessTokenSecret": "ACCESS_TOKEN_SECRET"
 }

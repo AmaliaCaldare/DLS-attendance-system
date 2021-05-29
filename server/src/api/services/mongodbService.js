@@ -1,8 +1,10 @@
 import { MongoClient } from 'mongodb';
 import config from 'config';
+import bcrypt from 'bcrypt';
 
 let client;
 let db;
+
 const connect = async () => {
   const uri = `${config.get(`mongodbUri`)}`;
 
@@ -27,9 +29,20 @@ const createClass = async (date, startTime, endTime, courseId, attendanceList) =
   return newClass.ops[0];
 };
 
-const createUser = async (name, role, email) => {
-  await db.collection(`users`)
-    .insertOne({ name, role, email });
+const createUser = async (name, role, email, password) => {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  const result = await db.collection(`users`)
+    .insertOne({
+      name, role, email, password: hashedPassword
+    });
+
+  const finalResult = result.ops[0];
+
+  return {
+    id: finalResult.id, name: finalResult.name, role: finalResult.role, email: finalResult.email
+  };
 };
 
 const getCourses = async () => {
@@ -77,6 +90,15 @@ const getClasses = async () => {
   return null;
 };
 
+const getUserByEmail = async (email) => {
+  const user = await db.collection(`users`).findOne({ email });
+  return user;
+};
+
+const checkUserPassword = async (password, userPassword) => bcrypt.compareSync(
+  password, userPassword
+);
+
 export default {
   connect,
   createCourse,
@@ -85,6 +107,8 @@ export default {
   getCourses,
   getUsers,
   getClasses,
+  getUserByEmail,
+  checkUserPassword,
   getTeachers,
   getStudents
 };

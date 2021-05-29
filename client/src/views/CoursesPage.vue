@@ -8,11 +8,12 @@
                 </h3>
             </div>
         </b-container>
-        
+
     </div>
 </template>
 <script>
 import {getAllCourses} from '../services/CourseService'
+import {checkToken} from "../services/AuthService";
 import NavBar from '../components/NavBar.vue'
 
 
@@ -32,11 +33,13 @@ export default {
             getAllCourses().then(response => {
                 this.courses = response
             })
-            
+
         }
     },
     created(){
-        this.getAllCourses()
+      if(!checkToken(['admin', 'teacher'])) {
+        this.$router.push('/login');
+      }
     }
 }
 </script>
