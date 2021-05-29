@@ -2,12 +2,10 @@
     <div>
         <nav-bar></nav-bar>
         <b-container fluid class="text-center">
-            <h2>Courses</h2>
+            <h2>{{course}} Classes</h2>
             <div class="pt-8 d-flex flex-column justify-content-between">
-                <b-button v-for="course in courses" :key="course.id" class="lg font-weight-bold course-btn mt-3">
-                    <router-link :to="{ name: 'course-classes', params: {courseId: course._id } }">
-                    {{course.name}}
-                    </router-link>
+                <b-button  v-for="courseClass in classes" :key="courseClass.id" class="lg font-weight-bold class-btn mt-3">
+                    {{courseClass.date}} {{courseClass.startTime}}-{{courseClass.endTime}}
                 </b-button>
             </div>
         </b-container>
@@ -15,7 +13,7 @@
     </div>
 </template>
 <script>
-import {getAllCourses} from '../services/CourseService'
+import {getClasses} from '../services/ClassService'
 import NavBar from '../components/NavBar.vue'
 
 
@@ -25,24 +23,25 @@ export default {
     },
     data(){
         return {
-          courses: [],
+          classes: [],
+          course: ""
         }
     },
     methods: {
-        getAllCourses(){
-            getAllCourses().then(response => {
-                this.courses = response
+        getAllClasses(){
+            getClasses().then(response => {
+                this.classes = response
             })
             
         }
     },
     created(){
-        this.getAllCourses()
+        this.getAllClasses()
     }
 }
 </script>
 <style scoped>
-.course-btn{
+.class-btn{
     width: 50%;
     margin: 0 auto;
     height: 40px;

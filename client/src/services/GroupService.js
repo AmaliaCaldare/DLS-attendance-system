@@ -1,10 +1,10 @@
-export async function getClasses() {
-    const response = await fetch('/api/classes/get');
+export async function getAllGroups() {
+    const response = await fetch('/api/groups/get');
     return await response.json();
 }
 
-export async function createClass(data = {}){
-    const response = await fetch('/api/classes', {
+export async function createGroup(data = {}){
+    const response = await fetch('/api/groups', {
         method: 'POST',
         mode: 'cors',
         headers: {
