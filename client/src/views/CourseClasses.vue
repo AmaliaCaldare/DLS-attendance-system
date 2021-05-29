@@ -15,6 +15,7 @@
 <script>
 import {getClasses} from '../services/ClassService'
 import NavBar from '../components/NavBar.vue'
+import {checkToken} from '../services/AuthService'
 
 
 export default {
@@ -36,7 +37,11 @@ export default {
         }
     },
     created(){
-        this.getAllClasses()
+        if(!checkToken(['admin', 'teacher'])) {
+            this.$router.push('/login');
+        } else {
+            this.getAllClasses()
+        }  
     }
 }
 </script>
