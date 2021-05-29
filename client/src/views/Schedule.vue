@@ -81,7 +81,7 @@ export default {
         
     },
     created(){
-        if(!checkToken(['admin', 'teacher'])) {
+        if(!checkToken(['student', 'teacher'])) {
             this.$router.push('/login');
         } else {
             this.getAllClasses()

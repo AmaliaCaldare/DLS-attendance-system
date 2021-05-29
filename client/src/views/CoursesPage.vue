@@ -3,6 +3,7 @@
         <nav-bar></nav-bar>
         <b-container fluid class="text-center">
             <h2>Courses</h2>
+            <router-link to="/create/course" v-if="userRole === 'admin'">Create a new course</router-link>
             <div class="pt-8 d-flex flex-column justify-content-between">
                 <b-button v-for="course in courses" :key="course.id" class="lg font-weight-bold course-btn mt-3">
                     <router-link :to="{ name: 'course-classes', params: {courseId: course._id } }">
@@ -27,6 +28,7 @@ export default {
     data(){
         return {
           courses: [],
+          userRole: ""
         }
     },
     methods: {
@@ -38,9 +40,10 @@ export default {
         }
     },
     created(){
-      if(!checkToken(['admin', 'teacher'])) {
+      if(!checkToken(['admin', 'teacher', 'student'])) {
         this.$router.push('/login');
-      } else {
+      }else {
+          this.userRole = localStorage.getItem('role')
         this.getAllCourses()
       }
     }

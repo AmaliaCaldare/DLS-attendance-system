@@ -14,17 +14,17 @@ const connect = async () => {
   db = client.db(`dls-attendance-system`);
 };
 
-const createCourse = async (name, teacherId, group) => {
+const createCourse = async (name, teacherId, groups) => {
   const course = await db.collection(`courses`)
-    .insertOne({ name, teacherId, group });
+    .insertOne({ name, teacherId, groups });
 
   return course.ops[0];
 };
 
-const createClass = async (date, startTime, endTime, courseId, attendanceList) => {
+const createClass = async (date, startTime, endTime, courseId, groupId, attendanceList) => {
   const newClass = await db.collection(`classes`)
     .insertOne({
-      date, startTime, endTime, courseId, attendanceList
+      date, startTime, endTime, courseId, groupId, attendanceList
     });
   return newClass.ops[0];
 };

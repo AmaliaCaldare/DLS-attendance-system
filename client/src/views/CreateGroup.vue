@@ -69,11 +69,7 @@ export default {
             students: []
         }
     },
-    // watch: {
-    //     'form.students': function (){
-    //      console.log(this.form.students);
-    //     },
-    // },
+    
     methods: {
         onSubmit(event){
             event.preventDefault()
