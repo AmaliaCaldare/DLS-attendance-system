@@ -150,6 +150,22 @@ const getGroupById = async (id) => {
   return group;
 };
 
+const getClassById = async (id) => {
+  const oId = new ObjectID(id);
+
+  const foundClass = await db.collection(`classes`).findOne({ _id: oId });
+
+  return foundClass;
+};
+
+const getStudentById = async (id) => {
+  const oId = new ObjectID(id);
+
+  const student = await db.collection(`users`).findOne({ _id: oId });
+
+  return student;
+};
+
 export default {
   connect,
   createCourse,
@@ -167,5 +183,7 @@ export default {
   getClassesByCourseId,
   getCourseById,
   getTeacherById,
-  getGroupById
+  getGroupById,
+  getClassById,
+  getStudentById
 };
