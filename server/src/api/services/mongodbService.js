@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import config from 'config';
 import bcrypt from 'bcrypt';
 
@@ -116,6 +116,40 @@ const checkUserPassword = async (password, userPassword) => bcrypt.compareSync(
   password, userPassword
 );
 
+const getClassesByCourseId = async (courseId) => {
+  const classes = await db.collection(`classes`).find({ courseId }).toArray();
+
+  if (classes.length > 0) {
+    return classes;
+  }
+
+  return null;
+};
+
+const getCourseById = async (id) => {
+  const oId = new ObjectID(id);
+
+  const course = await db.collection(`courses`).findOne({ _id: oId });
+
+  return course;
+};
+
+const getTeacherById = async (id) => {
+  const oId = new ObjectID(id);
+
+  const teacher = await db.collection(`users`).findOne({ _id: oId });
+
+  return teacher;
+};
+
+const getGroupById = async (id) => {
+  const oId = new ObjectID(id);
+
+  const group = await db.collection(`groups`).findOne({ _id: oId });
+
+  return group;
+};
+
 export default {
   connect,
   createCourse,
@@ -129,5 +163,9 @@ export default {
   checkUserPassword,
   getTeachers,
   getStudents,
-  getGroups
+  getGroups,
+  getClassesByCourseId,
+  getCourseById,
+  getTeacherById,
+  getGroupById
 };

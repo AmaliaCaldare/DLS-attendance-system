@@ -3,10 +3,12 @@ import createUser from './createUser';
 import getUsers from './getUsers';
 import getTeachers from './getTeachers';
 import getStudents from './getStudents';
+import getTeacherById from './getTeacherById';
 
 export default {
   createUser: serverErrorSafe(createUser),
   getUsers: serverErrorSafe(getUsers),
   getTeachers: serverErrorSafe(getTeachers),
-  getStudents: serverErrorSafe(getStudents)
+  getStudents: serverErrorSafe(getStudents),
+  getTeacherById: serverErrorSafe(getTeacherById)
 };
