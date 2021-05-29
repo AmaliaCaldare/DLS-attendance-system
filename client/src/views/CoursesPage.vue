@@ -40,6 +40,8 @@ export default {
     created(){
       if(!checkToken(['admin', 'teacher'])) {
         this.$router.push('/login');
+      } else {
+        this.getAllCourses()
       }
     }
 }

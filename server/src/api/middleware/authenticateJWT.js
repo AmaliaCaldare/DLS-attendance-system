@@ -3,11 +3,9 @@ import jwt from 'jsonwebtoken';
 
 const authenticateJWT = async (req, res, next) => {
   const accessTokenSecret = config.get(`accessTokenSecret`);
-  const authHeader = req.headers.authorization;
+  const { token } = req.headers;
 
-  if (authHeader) {
-    const token = authHeader.split(` `)[1];
-
+  if (token) {
     try {
       const user = await jwt.verify(token, accessTokenSecret);
       req.user = user;

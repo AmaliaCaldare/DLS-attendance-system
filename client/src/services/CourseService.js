@@ -1,5 +1,9 @@
 export async function getAllCourses() {
-    const response = await fetch('/api/courses/get');
+    const response = await fetch('/api/courses/get', {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
     return await response.json();
 }
 
