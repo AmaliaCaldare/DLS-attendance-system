@@ -6,10 +6,6 @@ const generateCode = () => {
   return code;
 };
 
-const startTimer = (minutes, seconds) => {
-
-};
-
 let io;
 const connect = async (server) => {
   io = socketIo(server);
