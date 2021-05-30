@@ -52,12 +52,11 @@ export default {
         }
         getAccessToken(user).then(response => {
           localStorage.setItem('token', response.accessToken);
-          localStorage.setItem('role', response.role)
+          localStorage.setItem('role', response.user.role)
+          localStorage.setItem('user', JSON.stringify(response.user));
           this.$router.push('/courses')
-
         })
-
-            event.preventDefault()
+        event.preventDefault()
       }
 
     },
