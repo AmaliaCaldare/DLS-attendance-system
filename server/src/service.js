@@ -25,18 +25,7 @@ const start = async () => {
   routes(app);
 
   service = app.listen(port);
-  /* service = http.Server(app);
-  service.listen(port); */
 
-  app.get(`/`, (req, res) => {
-    res.sendFile(`${__dirname}/index.html`);
-  });
-  // eslint-disable-next-line global-require
-  /* (const io = require(`socket.io`)(service);
-  io.on(`connection`, (socket) => {
-    console.log(`Connectd`);
-  });
-*/
   await webSocketService.connect(service);
   await webSocketService.emitCode();
   console.log(`Now listening to port`, port);
