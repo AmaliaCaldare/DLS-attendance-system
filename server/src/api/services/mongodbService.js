@@ -1,6 +1,7 @@
 import { MongoClient, ObjectID } from 'mongodb';
 import config from 'config';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
 
 let client;
 let db;
@@ -166,6 +167,27 @@ const getStudentById = async (id) => {
   return student;
 };
 
+const getCoursesByStudentId = async (id) => {
+  const groups = await db.collection(`groups`).find().toArray();
+  const groupWithStudent = _.chain(groups).map((group) => {
+    if (group.students.includes(id)) {
+      return group;
+    }
+    return null;
+  }).filter((group) => group !== null).value();
+
+  const courses = await db.collection(`courses`).find().toArray();
+  const coursesByStudent = _.chain(courses).map((course) => {
+    // eslint-disable-next-line no-underscore-dangle
+    if (course.groups && course.groups.includes(ObjectID(groupWithStudent[0]._id).toString())) {
+      return course;
+    }
+    return null;
+  }).filter((course) => course !== null).value();
+
+  return coursesByStudent;
+};
+
 export default {
   connect,
   createCourse,
@@ -185,5 +207,6 @@ export default {
   getTeacherById,
   getGroupById,
   getClassById,
-  getStudentById
+  getStudentById,
+  getCoursesByStudentId
 };
