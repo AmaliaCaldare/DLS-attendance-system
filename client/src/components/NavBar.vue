@@ -6,10 +6,8 @@
                 <b-nav-item class="nav-tab" href="/courses" v-if="role">Courses</b-nav-item>
                 <b-nav-item class="nav-tab" href="/create/class" v-if="role ==='admin'">Create Class</b-nav-item>
                 <b-nav-item class="nav-tab" href="/create/group" v-if="role ==='admin'">Create Group</b-nav-item>
-                <b-nav-item class="nav-tab" href="#" v-if="role ==='admin'">Students</b-nav-item>
-                <b-nav-item class="nav-tab" href="#" v-if="role ==='admin'">Teachers</b-nav-item>
+                <b-nav-item class="nav-tab" href="/create/user" v-if="role ==='admin'">Create User</b-nav-item>
                 <b-nav-item class="nav-tab" href="/schedule" v-if="role ==='teacher' || role ==='student'">Schedule</b-nav-item>
-                
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
                 <b-nav-item class="nav-tab ml-auto" @click="logout">Log out</b-nav-item>

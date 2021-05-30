@@ -5,7 +5,8 @@ const CreateGroupPage = () => import("../views/CreateGroup.vue");
 const CoursesPage = () => import("../views/CoursesPage.vue");
 const SchedulePage = ()=> import("../views/Schedule.vue");
 const GenerateCodePage = ()=> import("../views/GenerateCode.vue");
-const CourseClasses = () => import("../views/CourseClasses.vue")
+const CourseClasses = () => import("../views/CourseClasses.vue");
+const CreateUser = () => import("../views/CreateUser.vue")
 
 
 const routes = [
@@ -53,6 +54,11 @@ const routes = [
         path: "/course/:courseId/classes",
         name: "course-classes",
         component: CourseClasses
+    },
+    {
+        path: "/create/user",
+        name: "create-user",
+        component: CreateUser
     },
 ];
 

@@ -39,12 +39,25 @@ export default {
 
         }
     },
-    created(){
+    async created(){
       if(!checkToken(['admin', 'teacher', 'student'])) {
         this.$router.push('/login');
       }else {
-          this.userRole = localStorage.getItem('role')
-        this.getAllCourses()
+        this.userRole = localStorage.getItem('role')
+        if(this.userRole === 'admin'){
+            this.courses = await getAllCourses()
+        }else if(this.userRole === 'teacher'){
+            const teacher = JSON.parse(localStorage.getItem('user'))
+            console.log(teacher);
+            getAllCourses().then(response => {
+                response.forEach((course) => {
+                    if(course.teacherId === teacher._id){
+                        this.courses.push(course)
+                    }
+                })
+            })
+        }
+        
       }
     }
 }

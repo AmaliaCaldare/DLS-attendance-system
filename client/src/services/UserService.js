@@ -24,3 +24,16 @@ export async function getStudents() {
     });
     return await response.json();
 }
+
+export async function createUser(data = {}){
+    const response = await fetch('/api/users', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token')
+        },
+        body: JSON.stringify(data)
+    });
+    return response.json();
+}
