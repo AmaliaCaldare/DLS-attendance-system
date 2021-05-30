@@ -30,4 +30,5 @@ export default (app) => {
   app.get(`/api/groups/:id`, authenticateJWT, groups.getGroupById);
   app.get(`/api/classes/class/:id`, authenticateJWT, classes.getClassById);
   app.get(`/api/students/:id`, authenticateJWT, users.getStudentById);
+  app.get(`/api/courses/student/:id`, authenticateJWT, courses.getCoursesByStudent);
 };
