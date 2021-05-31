@@ -46,7 +46,7 @@ const routes = [
         component: CreateGroupPage
     },
     {
-        path: "/generate-code",
+        path: "/generate-code/:classId",
         name: "Generate code",
         component: GenerateCodePage
     },
