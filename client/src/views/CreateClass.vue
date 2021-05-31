@@ -49,9 +49,9 @@
                         ></b-form-select>
                     </b-form-group>
 
-                    <b-form-group label="Course:" label-for="course" class="w-75" v-if="form.course">
+                    <b-form-group label="Group:" label-for="group" class="w-75" v-if="form.course">
                         <b-form-select
-                            id="course"
+                            id="group"
                             v-model="form.group"
                             :options="courseGroups"
                             required
