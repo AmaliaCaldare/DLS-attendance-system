@@ -14,9 +14,10 @@ const connect = async (server) => {
 const emitCode = async () => {
   io.on(`connection`, (socket) => {
     console.log(`Socket connected`);
-    const code = generateCode();
-
+    let code = ``;
     socket.on(`clicked`, (data) => {
+      code = generateCode();
+
       socket.emit(`code`, code);
 
       let minutes = 1;
