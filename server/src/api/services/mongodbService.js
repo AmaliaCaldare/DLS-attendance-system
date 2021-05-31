@@ -188,6 +188,42 @@ const getCoursesByStudentId = async (id) => {
   return coursesByStudent;
 };
 
+const getClassByTeacher = async (id) => {
+  const courses = await db.collection(`courses`).find({ teacherId: id }).toArray();
+  const classesList = [];
+
+  await Promise.all(
+    _.map(courses, async (course) => {
+    // eslint-disable-next-line no-underscore-dangle
+      const courseId = ObjectID(course._id).toString();
+
+      const list = await db.collection(`classes`).find({ courseId }).toArray();
+      if (list.length > 0) {
+        _.map((list), (element) => {
+          classesList.push(element);
+        });
+      }
+    })
+  );
+
+  return classesList;
+};
+
+const getClassByStudent = async (id) => {
+  const groups = await db.collection(`groups`).find().toArray();
+  const groupWithStudent = _.chain(groups).map((group) => {
+    if (group.students.includes(id)) {
+      // eslint-disable-next-line no-underscore-dangle
+      return ObjectID(group._id).toString();
+    }
+    return null;
+  }).filter((group) => group !== null).value();
+
+  const classesList = await db.collection(`classes`).find({ groupId: groupWithStudent[0] }).toArray();
+
+  return classesList;
+};
+
 export default {
   connect,
   createCourse,
@@ -208,5 +244,7 @@ export default {
   getGroupById,
   getClassById,
   getStudentById,
-  getCoursesByStudentId
+  getCoursesByStudentId,
+  getClassByTeacher,
+  getClassByStudent
 };
