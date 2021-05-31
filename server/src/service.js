@@ -4,11 +4,11 @@ import "regenerator-runtime/runtime.js";
 import express from 'express';
 import config from 'config';
 import bodyparser from 'body-parser';
-import http from 'http';
 
 import routes from './api/routes';
 import mongodbService from './api/services/mongodbService';
-import webSocketService from "./api/services/webSocketService";
+import webSocketService from './api/services/webSocketService';
+import setHeaders from './api/middleware/setHeaders';
 
 let service;
 const start = async () => {
@@ -21,6 +21,7 @@ const start = async () => {
   app.use(bodyparser.json());
   app.use(bodyparser.urlencoded({ extended: false }));
   app.use(express.static(`public`));
+  app.user(setHeaders);
 
   routes(app);
 
