@@ -14,9 +14,9 @@ const connect = async (server) => {
 const emitCode = async () => {
   io.on(`connection`, (socket) => {
     console.log(`Socket connected`);
+    const code = generateCode();
 
     socket.on(`clicked`, (data) => {
-      const code = generateCode();
       socket.emit(`code`, code);
 
       let minutes = 1;
@@ -45,6 +45,17 @@ const emitCode = async () => {
           clearInterval(startCountdown);
         }
       }, 1000);
+    });
+
+    socket.on(`student-code`, (data) => {
+      console.log(data, code);
+
+      if (data === code) {
+        socket.emit(`attendance-checked`, true);
+      }
+      else {
+        socket.emit(`attendance-checked`, false);
+      }
     });
   });
 };
