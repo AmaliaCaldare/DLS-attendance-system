@@ -5,14 +5,6 @@
 </template>
 
 <script>
-// import Login from './views/Login.vue'
-
-// export default {
-//   name: 'App',
-//   components: {
-//     Login
-//   }
-// }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 

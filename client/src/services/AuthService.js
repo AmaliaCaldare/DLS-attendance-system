@@ -1,7 +1,6 @@
 export async function getAccessToken(user) {
     const response = await fetch('/api/login', {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },

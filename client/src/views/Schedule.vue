@@ -15,6 +15,10 @@
                                 :to="{ name: 'generate-code', params: {classId: item.id } }">
                                 Generate code
                             </router-link>
+                            <router-link v-if="userRole === 'student' && item.status === 'Ongoing'" 
+                                :to="{ name: 'enter-code', params: {classId: item.id } }">
+                                Enter code
+                            </router-link>
                         </template>
                     </b-table>
                 </div>
@@ -60,7 +64,7 @@ export default {
             getClasses().then(classes => {
                 for(let i = 0; i < classes.length; i++) {
                     let doc = classes[i]
-                    let newClass = {id: doc._id,startTime: doc.startTime, endTime: doc.endTime, date: doc.date}
+                    let newClass = {id: doc._id, startTime: doc.startTime, endTime: doc.endTime, date: doc.date}
                      //   course: course.name, group: doc.groupId}
                     getCourseById(doc.courseId).then((course) => {
                         newClass.course = course.name 
@@ -112,7 +116,7 @@ export default {
                 }else{
                     status = 'Upcoming'
                 }
-                let updatedClass = {time: classByDate.startTime + '-' + classByDate.endTime,
+                let updatedClass = {id: classByDate.id,time: classByDate.startTime + '-' + classByDate.endTime,
                      course: classByDate.course, group: classByDate.group, status: status}
                 const uc = updatedClass;
                 classesByDate.push(uc)  

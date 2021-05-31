@@ -28,7 +28,6 @@ export async function getStudents() {
 export async function createUser(data = {}){
     const response = await fetch('/api/users', {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
             token: localStorage.getItem('token')

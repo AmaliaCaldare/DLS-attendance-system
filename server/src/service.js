@@ -21,7 +21,7 @@ const start = async () => {
   app.use(bodyparser.json());
   app.use(bodyparser.urlencoded({ extended: false }));
   app.use(express.static(`public`));
-  app.user(setHeaders);
+  app.use(setHeaders);
 
   routes(app);
 
