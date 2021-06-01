@@ -42,15 +42,13 @@ const emitCode = async () => {
           socket.emit(`countdown`, `0${time.minutes}:0${time.seconds}`);
           socket.broadcast.emit(`countdown-student`, `0${time.minutes}:0${time.seconds}`);
         }
+
         if (outOfTime && seconds === 0) {
           socket.emit(`countdown`, `00:00. Countdown finished.`);
           socket.broadcast.emit(`countdown-student`, `over`);
-
-          socket.on(`class`, async (result) => {
-            await mongodbService.setStudentsWithNoAttendance(result.groupId,
-              // eslint-disable-next-line no-underscore-dangle
-              result._id, result.attendanceList);
-          });
+          await mongodbService.setStudentsWithNoAttendance(data.groupId,
+          // eslint-disable-next-line no-underscore-dangle
+            data._id, data.attendanceList);
 
           clearInterval(startCountdown);
         }

@@ -41,8 +41,8 @@ export default {
     methods: {
         onSubmit(event){
             event.preventDefault()
-            this.$socket.client.emit('clicked', "clicked");
-            this.$socket.client.emit('class', this.class);
+            this.$socket.client.emit('clicked', this.class);
+            //this.$socket.client.emit('class', this.class);
             this.$socket.$subscribe('countdown', (data) => {
                 this.countDown = data
             })

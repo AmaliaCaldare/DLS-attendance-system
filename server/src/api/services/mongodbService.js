@@ -251,7 +251,8 @@ const setStudentsWithNoAttendance = async (groupId, classId, attendanceList) => 
   const oId = new ObjectID(groupId);
   const group = await db.collection(`groups`).findOne({ _id: oId });
   const attendanceListIds = _.map(attendanceList, (list) => list.studentId);
-  const { students } = group;
+  // eslint-disable-next-line prefer-destructuring
+  const students = group.students;
 
   const noAttendanceList = students.filter((student) => !attendanceListIds.includes(student));
 
