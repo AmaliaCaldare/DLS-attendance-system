@@ -16,7 +16,7 @@
     </div>
 </template>
 <script>
-import {getAllCourses} from '../services/CourseService'
+import {getAllCourses, getCoursesByStudent} from '../services/CourseService'
 import {checkToken} from "../services/AuthService";
 import NavBar from '../components/NavBar.vue'
 
@@ -31,31 +31,24 @@ export default {
           userRole: ""
         }
     },
-    methods: {
-        getAllCourses(){
-            getAllCourses().then(response => {
-                this.courses = response
-            })
-
-        }
-    },
     async created(){
       if(!checkToken(['admin', 'teacher', 'student'])) {
         this.$router.push('/login');
       }else {
         this.userRole = localStorage.getItem('role')
+        const user = JSON.parse(localStorage.getItem('user'))
         if(this.userRole === 'admin'){
             this.courses = await getAllCourses()
         }else if(this.userRole === 'teacher'){
-            const teacher = JSON.parse(localStorage.getItem('user'))
-            console.log(teacher);
             getAllCourses().then(response => {
                 response.forEach((course) => {
-                    if(course.teacherId === teacher._id){
+                    if(course.teacherId === user._id){
                         this.courses.push(course)
                     }
                 })
             })
+        }else if(this.userRole === 'student'){
+            this.courses = await getCoursesByStudent(user._id)
         }
         
       }

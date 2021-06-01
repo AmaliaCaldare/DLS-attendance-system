@@ -8,6 +8,9 @@ const GenerateCodePage = ()=> import("../views/GenerateCode.vue");
 const CourseClasses = () => import("../views/CourseClasses.vue");
 const CreateUser = () => import("../views/CreateUser.vue")
 const EnterCode = () => import("../views/EnterCode.vue")
+const ConfirmedAttendance = () => import("../views/ConfirmedAttendance.vue")
+const AttendanceDenied = () => import("../views/AttendanceDenied.vue")
+const ClassView = () => import("../views/ClassView.vue")
 
 
 const routes = [
@@ -65,6 +68,21 @@ const routes = [
         path: "/create/user",
         name: "create-user",
         component: CreateUser
+    },
+    {
+        path: "/:classId/attendance/confirmed/:time",
+        name: "confirmed",
+        component: ConfirmedAttendance
+    },
+    {
+        path: "/:classId/attendance/denied",
+        name: "denied",
+        component: AttendanceDenied
+    },
+    {
+        path: "/courses/:course/:classId",
+        name: "class-view",
+        component: ClassView
     },
 ];
 

@@ -3,8 +3,8 @@
         <nav-bar></nav-bar>
         <b-container fluid class="center">
             <b-card class="w-75 schedule-card">
-                <h3>Students' attendance list</h3>
-                <h3></h3>
+                <h4>Students' attendance list</h4>
+                <h4>{{courseClass.date}} - {{courseName}} - {{group.name}}</h4>
                 <b-table
                     :fields="fields"
                     :items="configFields()">
@@ -18,7 +18,8 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import {checkToken} from '../services/AuthService'
-
+import {getClassById} from '../services/ClassService'
+import {getGroupById} from '../services/GroupService'
 
 export default {
     components: {
@@ -27,8 +28,10 @@ export default {
     data(){
         return {
             fields: ['studentName', 'attendance'],
-            studentsAttendance: []
-          
+            studentsAttendance: [],
+            courseClass: {},
+            courseName: this.$route.params.course,
+            group: {}  
         }
     },
     // watch: {
@@ -48,11 +51,12 @@ export default {
         }
         
     },
-    created(){
+    async created(){
         if(!checkToken(['admin', 'teacher'])) {
             this.$router.push('/login');
         } else {
-            //this.getAllClasses()
+            this.courseClass = await getClassById(this.$route.params.classId)
+            this.group = await getGroupById(this.courseClass.groupId)
         }  
                 
         
