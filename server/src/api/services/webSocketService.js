@@ -1,6 +1,8 @@
 import randomstring from 'randomstring';
 import socketIo from 'socket.io';
 
+import mongodbService from './mongodbService';
+
 const generateCode = () => {
   const code = randomstring.generate(7);
   return code;
@@ -21,7 +23,7 @@ const emitCode = async () => {
       let minutes = 1;
       let seconds = 0;
       let outOfTime = false;
-      const startCountdown = setInterval(() => {
+      const startCountdown = setInterval(async () => {
         if (seconds === 0) {
           minutes -= 1;
 
@@ -43,6 +45,13 @@ const emitCode = async () => {
         if (outOfTime && seconds === 0) {
           socket.emit(`countdown`, `00:00. Countdown finished.`);
           socket.broadcast.emit(`countdown-student`, `over`);
+
+          socket.on(`class`, async (result) => {
+            await mongodbService.setStudentsWithNoAttendance(result.groupId,
+              // eslint-disable-next-line no-underscore-dangle
+              result._id, result.attendanceList);
+          });
+
           clearInterval(startCountdown);
         }
       }, 1000);
