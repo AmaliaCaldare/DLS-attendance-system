@@ -247,6 +247,21 @@ const updateAttendanceList = async (studentId, classId, boolean) => {
   return attendanceList;
 };
 
+const setStudentsWithNoAttendance = async (groupId, classId, attendanceList) => {
+  const oId = new ObjectID(groupId);
+  const group = await db.collection(`groups`).findOne({ _id: oId });
+  const attendanceListIds = _.map(attendanceList, (list) => list.studentId);
+  const { students } = group;
+
+  const noAttendanceList = students.filter((student) => !attendanceListIds.includes(student));
+
+  const updatedList = await Promise.all(_.map(noAttendanceList, async (result) => {
+    await updateAttendanceList(result, classId, false);
+  }));
+
+  return updatedList;
+};
+
 export default {
   connect,
   createCourse,
@@ -271,5 +286,6 @@ export default {
   getClassByTeacher,
   getClassByStudent,
   updateAttendanceList,
-  getAttendanceList
+  getAttendanceList,
+  setStudentsWithNoAttendance
 };

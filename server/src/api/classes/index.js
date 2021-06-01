@@ -7,6 +7,7 @@ import getClassByTeacher from './getClassByTeacher';
 import getClassByStudent from './getClassByStudent';
 import updateAttendanceList from './updateAttendanceList';
 import getAttendanceList from './getAttendanceList';
+import setStudentsWithNoAttendance from './setStudentsWithNoAttendace';
 
 export default {
   createClass: serverErrorSafe(createClass),
@@ -16,5 +17,6 @@ export default {
   getClassByTeacher: serverErrorSafe(getClassByTeacher),
   getClassByStudent: serverErrorSafe(getClassByStudent),
   updateAttendanceList: serverErrorSafe(updateAttendanceList),
-  getAttendanceList: serverErrorSafe(getAttendanceList)
+  getAttendanceList: serverErrorSafe(getAttendanceList),
+  setStudentsWithNoAttendance: serverErrorSafe(setStudentsWithNoAttendance)
 };

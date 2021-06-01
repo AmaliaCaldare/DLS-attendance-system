@@ -7,9 +7,6 @@ const login = async (email, password, role) => {
   return { accessToken };
 };
 
-const logout = async () => {
-};
-
 export default {
   login
 };
