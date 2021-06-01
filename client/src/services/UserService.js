@@ -16,6 +16,15 @@ export async function getTeacherById(id) {
     return await response.json();
 }
 
+export async function getStudentById(id) {
+    const response = await fetch(`/api/students/${id}`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
 export async function getStudents() {
     const response = await fetch('/api/students/get', {
         headers: {

@@ -56,8 +56,16 @@ export async function createClass(data = {}){
     return response.json();
 }
 
+export async function getAttendanceList(classId) {
+    const response = await fetch(`/api/classes/${classId}/attendance/get`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
 export async function updateAttendanceList(classId, data = {}){
-    console.log(classId);
     const response = await fetch(`/api/classes/${classId}/attendance`, {
         method: 'PUT',
         headers: {
@@ -65,6 +73,18 @@ export async function updateAttendanceList(classId, data = {}){
             token: localStorage.getItem('token')
         },
         body: JSON.stringify(data)
+    });
+    return response.json();
+}
+
+export async function setStudentsWithNoAttendance(classId, groupById, attendanceList){
+    const response = await fetch(`/api/classes/${classId}/noAttendance`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token')
+        },
+        body: JSON.stringify({groupById: groupById, attendanceList: attendanceList})
     });
     return response.json();
 }

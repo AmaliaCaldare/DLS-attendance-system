@@ -52,7 +52,10 @@ export default {
                     this.$router.push(`/${this.$route.params.classId}/attendance/confirmed/${time}`)
                 })
             }else{
-                this.$router.push(`/${this.$route.params.classId}/attendance/denied/`)
+                updateAttendanceList(this.$route.params.classId, {studentId: this.user._id, check: false}).then(() => {
+                    this.$router.push(`/${this.$route.params.classId}/attendance/denied/`)
+                })
+                
             }
         },
         
