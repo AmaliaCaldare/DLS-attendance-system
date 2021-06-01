@@ -12,7 +12,7 @@ const createClass = async (req, res) => {
     return;
   }
   const newClass = await mongodbService
-    .createClass(date, startTime, endTime, courseId, groupId, attendanceList);
+    .createClass(date, startTime, endTime, courseId, groupId, attendanceList || []);
 
   if (!newClass) {
     res.status(500).send({ error: `Could not create class` });

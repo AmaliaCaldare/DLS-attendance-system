@@ -33,4 +33,7 @@ export default (app) => {
   app.get(`/api/courses/student/:id`, authenticateJWT, courses.getCoursesByStudent);
   app.get(`/api/classes/teacher/:id`, authenticateJWT, classes.getClassByTeacher);
   app.get(`/api/classes/student/:id`, authenticateJWT, classes.getClassByStudent);
+
+  app.get(`/api/classes/:classId/attendance/get`, authenticateJWT, classes.getAttendanceList);
+  app.put(`/api/classes/:classId/attendance`, authenticateJWT, classes.updateAttendanceList);
 };
