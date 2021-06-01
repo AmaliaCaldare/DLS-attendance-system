@@ -224,6 +224,29 @@ const getClassByStudent = async (id) => {
   return classesList;
 };
 
+const getAttendanceList = async (classId) => {
+  const foundClass = await getClassById(classId);
+
+  if (foundClass) {
+    return foundClass.attendanceList;
+  }
+  return null;
+};
+
+const updateAttendanceList = async (studentId, classId, boolean) => {
+  const oId = new ObjectID(classId);
+  const data = { studentId, attendanceCheck: boolean };
+  const updateDocument = {
+    $push: { attendanceList: data }
+  };
+
+  await db.collection(`classes`).updateOne({ _id: oId }, updateDocument);
+
+  const attendanceList = await getAttendanceList(classId);
+
+  return attendanceList;
+};
+
 export default {
   connect,
   createCourse,
@@ -246,5 +269,7 @@ export default {
   getStudentById,
   getCoursesByStudentId,
   getClassByTeacher,
-  getClassByStudent
+  getClassByStudent,
+  updateAttendanceList,
+  getAttendanceList
 };
