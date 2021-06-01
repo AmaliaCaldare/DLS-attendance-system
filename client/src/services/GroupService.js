@@ -20,7 +20,8 @@ export async function createGroup(data = {}){
     const response = await fetch('/api/groups', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token')
         },
         body: JSON.stringify(data)
     });

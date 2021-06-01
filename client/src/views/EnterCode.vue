@@ -20,6 +20,7 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import {checkToken} from '../services/AuthService'
+import {updateAttendanceList} from '../services/ClassService'
 
 export default {
     components: {
@@ -30,7 +31,8 @@ export default {
             countDown : "01:00",
             enteredCode: "",
             message: "",
-            generatedCode: ""
+            generatedCode: "",
+            user: {}
           
         }
     },
@@ -43,9 +45,17 @@ export default {
         onSubmit(event){
             event.preventDefault()
             if((this.generatedCode === this.enteredCode) && (this.countDown !== 'over')){
-                this.message = true
+                console.log(this.$route.params.classId);
+                updateAttendanceList(this.$route.params.classId, {studentId: this.user._id, check: true}).then(() => {
+                    const today = new Date();
+                    const time = today.getHours() + ":" + today.getMinutes()
+                    this.$router.push(`/${this.$route.params.classId}/attendance/confirmed/${time}`)
+                })
             }else{
-                this.message = false
+                updateAttendanceList(this.$route.params.classId, {studentId: this.user._id, check: false}).then(() => {
+                    this.$router.push(`/${this.$route.params.classId}/attendance/denied/`)
+                })
+                
             }
         },
         
@@ -59,10 +69,13 @@ export default {
     created(){
         if(!checkToken(['student'])) {
             this.$router.push('/login');
+        }else{
+            this.user = JSON.parse(localStorage.getItem('user'))
+            this.$socket.$subscribe('countdown-student', (data) => {
+                this.countDown = data
+            })
         }
-        this.$socket.$subscribe('countdown-student', (data) => {
-            this.countDown = data
-        })
+        
         
     },  
 }

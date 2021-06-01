@@ -92,7 +92,7 @@ export default {
         
     },
     created(){
-        if(!checkToken(['admin', 'teacher'])) {
+        if(!checkToken(['admin'])) {
             this.$router.push('/login');
         } else {
             this.getAllStudents()

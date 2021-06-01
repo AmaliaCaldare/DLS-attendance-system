@@ -36,5 +36,5 @@ export default (app) => {
 
   app.get(`/api/classes/:classId/attendance/get`, authenticateJWT, classes.getAttendanceList);
   app.put(`/api/classes/:classId/attendance`, authenticateJWT, classes.updateAttendanceList);
-  app.put(`/api/classes/classId/noAttendace`, authenticateJWT, classes.setStudentsWithNoAttendance);
+  app.put(`/api/classes/:classId/noAttendance`, authenticateJWT, classes.setStudentsWithNoAttendance);
 };

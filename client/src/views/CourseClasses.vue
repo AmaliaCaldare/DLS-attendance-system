@@ -12,9 +12,12 @@
             </h4>
             <h2>{{course.name}}'s Classes</h2>
             <div class="pt-8 d-flex flex-column justify-content-between">
-                <b-button  v-for="courseClass in classes" :key="courseClass.id" class="lg font-weight-bold class-btn mt-3">
+                <router-link  v-for="courseClass in classes" 
+                :key="courseClass.id"
+                :to="{name: 'class-view', params: { course: course.name, classId: courseClass._id}}"
+                class="lg font-weight-bold class-btn mt-3">
                     {{courseClass.date}} {{courseClass.startTime}}-{{courseClass.endTime}}
-                </b-button>
+                </router-link>
             </div>
         </b-container>
         

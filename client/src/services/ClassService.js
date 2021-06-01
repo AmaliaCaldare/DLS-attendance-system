@@ -7,8 +7,36 @@ export async function getClasses() {
     return await response.json();
 }
 
+export async function getClassById(id) {
+    const response = await fetch(`/api/classes/class/${id}`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
+
 export async function getClassesByCourseId(courseId) {
     const response = await fetch(`/api/classes/${courseId}`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
+export async function getClassesByStudent(studentId) {
+    const response = await fetch(`/api/classes/student/${studentId}`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
+export async function getClassesByTeacher(teacherId) {
+    const response = await fetch(`/api/classes/teacher/${teacherId}`, {
         headers: {
             token: localStorage.getItem('token')
         }
@@ -24,6 +52,39 @@ export async function createClass(data = {}){
             token: localStorage.getItem('token')
         },
         body: JSON.stringify(data)
+    });
+    return response.json();
+}
+
+export async function getAttendanceList(classId) {
+    const response = await fetch(`/api/classes/${classId}/attendance/get`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
+export async function updateAttendanceList(classId, data = {}){
+    const response = await fetch(`/api/classes/${classId}/attendance`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token')
+        },
+        body: JSON.stringify(data)
+    });
+    return response.json();
+}
+
+export async function setStudentsWithNoAttendance(classId, groupById, attendanceList){
+    const response = await fetch(`/api/classes/${classId}/noAttendance`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            token: localStorage.getItem('token')
+        },
+        body: JSON.stringify({groupById: groupById, attendanceList: attendanceList})
     });
     return response.json();
 }

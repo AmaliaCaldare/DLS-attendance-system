@@ -3,12 +3,22 @@
         <nav-bar></nav-bar>
         <b-container fluid class="center">
             <b-card class="w-75 schedule-card">
-                <h3>Students' attendance list</h3>
-                <h3></h3>
+                <h4>Students' attendance list</h4>
+                <b-row>
+                    <b-col>
+                        <h4>{{courseClass.date}} - {{courseName}} - {{group.name}}</h4>
+                    </b-col>
+                    <b-col>
+                        <h2 class="text-right">average</h2>
+                    </b-col>
+                </b-row>
                 <b-table
                     :fields="fields"
-                    :items="configFields()">
-
+                    :items="students">
+                    <template v-slot:cell(attendance)="{ item }">
+                        <b-icon icon="check2-circle" variant="success" v-if="item.attendance" font-scale="2"></b-icon>
+                        <b-icon icon="x-circle-fill" variant="danger" v-if="!item.attendance" font-scale="2"></b-icon>
+                    </template>
                 </b-table>                
             </b-card>
         </b-container>
@@ -18,7 +28,9 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import {checkToken} from '../services/AuthService'
-
+import {getClassById, getAttendanceList} from '../services/ClassService'
+import {getGroupById} from '../services/GroupService'
+import {getStudentById} from '../services/UserService'
 
 export default {
     components: {
@@ -27,32 +39,35 @@ export default {
     data(){
         return {
             fields: ['studentName', 'attendance'],
-            studentsAttendance: []
-          
+            studentsAttendance: [],
+            courseClass: {},
+            courseName: this.$route.params.course,
+            group: {},
+            students: [],
+            attendanceList: []
         }
     },
-    // watch: {
-    //     'classes': function (){
-    //      this.getClassesByDate()
-    //     },
-    // },
+   
     methods: {
-        onSubmit(event){
-            event.preventDefault()
-
-        },
-    
-        configFields(){
-            
+        async calculateAverage(){
+            //const studentIdsInGroup = await this.group.students
             
         }
         
     },
-    created(){
+    async created(){
         if(!checkToken(['admin', 'teacher'])) {
             this.$router.push('/login');
         } else {
-            //this.getAllClasses()
+            this.courseClass = await getClassById(this.$route.params.classId)
+            this.group = await getGroupById(this.courseClass.groupId)
+            this.attendanceList = await getAttendanceList(this.courseClass._id)
+            this.attendanceList.forEach(async (record) => {
+                console.log(record);
+                let student = await getStudentById(record.studentId)
+                this.students.push({studentName: student.name, attendance: record.attendanceCheck})
+            })
+
         }  
                 
         

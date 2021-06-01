@@ -10,7 +10,7 @@
                 <b-nav-item class="nav-tab" href="/schedule" v-if="role ==='teacher' || role ==='student'">Schedule</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
-                <b-nav-item class="nav-tab ml-auto" @click="logout">Log out</b-nav-item>
+                <b-nav-item class="nav-tab ml-auto" @click="logout" v-if="role">Log out</b-nav-item>
             </b-navbar-nav>
         </b-navbar>
     </div>
@@ -32,10 +32,6 @@ export default {
         if(localStorage.getItem('role')){
             this.role = localStorage.getItem('role');
         }
-        
-        // set the user role
-        // this.role = ..
-
     }
   
 }

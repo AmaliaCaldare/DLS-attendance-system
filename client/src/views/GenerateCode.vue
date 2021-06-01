@@ -17,6 +17,7 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import {checkToken} from '../services/AuthService'
+import {getClassById} from '../services/ClassService'
 
 export default {
     components: {
@@ -26,7 +27,7 @@ export default {
         return {
             countDown : "01:00",
             code: '',
-          
+            class: {},          
         }
     },
     sockets: {
@@ -41,15 +42,19 @@ export default {
         onSubmit(event){
             event.preventDefault()
             this.$socket.client.emit('clicked', "clicked");
+            this.$socket.client.emit('class', this.class);
             this.$socket.$subscribe('countdown', (data) => {
                 this.countDown = data
             })
         },
         
     },
-    created(){
+    async created(){
         if(!checkToken(['admin', 'teacher'])) {
             this.$router.push('/login');
+        }
+        else{
+            this.class = await getClassById(this.$route.params.classId)
         }
     }
 }

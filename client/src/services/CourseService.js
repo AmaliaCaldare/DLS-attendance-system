@@ -16,6 +16,15 @@ export async function getCourseById(id) {
     return await response.json();
 }
 
+export async function getCoursesByStudent(studentId) {
+    const response = await fetch(`/api/courses/student/${studentId}`, {
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    });
+    return await response.json();
+}
+
 export async function createCourse(data = {}){
     const response = await fetch('/api/courses', {
         method: 'POST',

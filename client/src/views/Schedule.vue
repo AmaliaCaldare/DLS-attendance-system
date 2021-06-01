@@ -30,7 +30,7 @@
 </template>
 <script>
 import NavBar from '../components/NavBar.vue'
-import {getClasses} from '../services/ClassService'
+import {getClassesByTeacher, getClassesByStudent} from '../services/ClassService'
 import {checkToken} from '../services/AuthService'
 import {getCourseById} from '../services/CourseService'
 import {getGroupById} from '../services/GroupService'
@@ -46,8 +46,8 @@ export default {
             todaysClasses: [],
             classes: [],
             userRole: "",
+            user: {},
             updatedClasses: []
-          
         }
     },
     watch: {
@@ -61,7 +61,13 @@ export default {
 
         },
         getAllClasses(){
-            getClasses().then(classes => {
+            let userClasses = []
+            if(this.userRole === "teacher"){
+                userClasses = getClassesByTeacher(this.user._id)
+            }else if(this.userRole === "student"){
+                userClasses = getClassesByStudent(this.user._id)
+            }
+            userClasses.then(classes => {
                 for(let i = 0; i < classes.length; i++) {
                     let doc = classes[i]
                     let newClass = {id: doc._id, startTime: doc.startTime, endTime: doc.endTime, date: doc.date}
@@ -87,7 +93,6 @@ export default {
        
         getClassesByDate(){
             if(this.classes.length > 0){
-                
                 let classesByDate = this.classes.reduce((r, a) => {
                     r[a.date] = [...r[a.date] || [], a];
                     return r;
@@ -130,6 +135,7 @@ export default {
             this.$router.push('/login');
         } else {
             this.userRole = localStorage.getItem('role')
+            this.user = JSON.parse(localStorage.getItem('user'))
         }    
     },
     beforeMount() {
