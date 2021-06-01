@@ -11,11 +11,11 @@ const EnterCode = () => import("../views/EnterCode.vue")
 
 
 const routes = [
-    // {
-    //     path: "/",
-    //     redirect: "/home",
-    //     name: "Home"
-    // },
+    {
+        path: "/",
+        redirect: "/courses",
+        name: "Home"
+    },
     {
         path: "/login",
         name: "Login",

@@ -5,7 +5,6 @@
             <b-card class="w-75 login-card">
                 <p>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</p>
                 <b-form @submit="onSubmit" class="m-4 text-center">
-                    <!-- <h1>Time:  {{formatTime(countDown)}}</h1> -->
                     <h1>Time:  {{countDown}}</h1>
                     <input type="text" :value="code" readonly class="code-box my-5"> <br>
                     <b-button type="submit" class="generate-btn">Generate code</b-button>
@@ -18,8 +17,6 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import {checkToken} from '../services/AuthService'
-//import io from 'socket.io-client';
-
 
 export default {
     components: {
@@ -27,8 +24,8 @@ export default {
     },
     data(){
         return {
-            countDown : 300,
-            code: 'LIWEHF92HJ',
+            countDown : "01:00",
+            code: '',
           
         }
     },
@@ -36,36 +33,18 @@ export default {
         connect() {
             console.log('socket connected')
         },
-        // customEmit: function (data) {
-        //     console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-        // }
+        code(data){
+            this.code = data
+        },
     },
     methods: {
         onSubmit(event){
             event.preventDefault()
-            //this.countDownTimer()
             this.$socket.client.emit('clicked', "clicked");
-            this.$socket.$subscribe('code', (data) => {
-                this.code = data
-            })
             this.$socket.$subscribe('countdown', (data) => {
                 this.countDown = data
             })
-
         },
-        countDownTimer() {
-            if(this.countDown > 0) {
-                setTimeout(() => {
-                    this.countDown -= 1
-                    this.countDownTimer()
-                }, 1000)
-            }
-        },
-        formatTime(seconds){
-            let minutes = Math.floor(seconds / 60)
-            let sec = seconds - minutes * 60;
-            return minutes + ':' + sec
-        }
         
     },
     created(){

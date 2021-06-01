@@ -14,12 +14,10 @@ const connect = async (server) => {
 const emitCode = async () => {
   io.on(`connection`, (socket) => {
     console.log(`Socket connected`);
-    let code = ``;
     socket.on(`clicked`, (data) => {
-      code = generateCode();
-
+      const code = generateCode();
       socket.emit(`code`, code);
-
+      socket.broadcast.emit(`check`, code);
       let minutes = 1;
       let seconds = 0;
       let outOfTime = false;
@@ -36,27 +34,18 @@ const emitCode = async () => {
         const time = { minutes, seconds };
         if (seconds > 9) {
           socket.emit(`countdown`, `0${time.minutes}:${time.seconds}`);
+          socket.broadcast.emit(`countdown-student`, `0${time.minutes}:${time.seconds}`);
         }
         if (seconds <= 9) {
           socket.emit(`countdown`, `0${time.minutes}:0${time.seconds}`);
+          socket.broadcast.emit(`countdown-student`, `0${time.minutes}:0${time.seconds}`);
         }
-
         if (outOfTime && seconds === 0) {
           socket.emit(`countdown`, `00:00. Countdown finished.`);
+          socket.broadcast.emit(`countdown-student`, `over`);
           clearInterval(startCountdown);
         }
       }, 1000);
-    });
-
-    socket.on(`student-code`, (data) => {
-      console.log(data, code);
-
-      if (data === code) {
-        socket.emit(`attendance-checked`, true);
-      }
-      else {
-        socket.emit(`attendance-checked`, false);
-      }
     });
   });
 };
