@@ -19,7 +19,6 @@ export async function getGroupById(id) {
 export async function createGroup(data = {}){
     const response = await fetch('/api/groups', {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },

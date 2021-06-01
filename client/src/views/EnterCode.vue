@@ -5,9 +5,12 @@
             <b-card class="w-75 login-card">
                 <p>{{ $socket.connected ? 'Connected' : 'Disconnected' }}</p>
                 <b-form @submit="onSubmit" class="m-4 text-center">
-                    <h1>Time:  {{countDown}}</h1>
-                    <input type="text" :value="code" readonly class="code-box my-5"> <br>
-                    <b-button type="submit" class="generate-btn">Generate code</b-button>
+                    <h1 v-if="countDown === 'over'">Time is over</h1>
+                    <h1 v-else>Time left:  {{countDown}}</h1>
+                    <h1>Enter code: </h1>
+                    <input v-model="enteredCode" class="code-box my-5" required> <br>
+                    <b-button type="submit" class="generate-btn">Submit</b-button>
+                    <p>{{message}}</p>
                 </b-form>
             </b-card>
         </b-container>
@@ -25,33 +28,43 @@ export default {
     data(){
         return {
             countDown : "01:00",
-            code: '',
+            enteredCode: "",
+            message: "",
+            generatedCode: ""
           
         }
     },
     sockets: {
-        connect() {
-            console.log('socket connected')
-        },
-        code(data){
-            this.code = data
-        },
+        check(data){
+            this.generatedCode = data
+        }
     },
     methods: {
         onSubmit(event){
             event.preventDefault()
-            this.$socket.client.emit('clicked', "clicked");
-            this.$socket.$subscribe('countdown', (data) => {
-                this.countDown = data
-            })
+            if((this.generatedCode === this.enteredCode) && (this.countDown !== 'over')){
+                this.message = true
+            }else{
+                this.message = false
+            }
         },
+        
+        formatTime(seconds){
+            let minutes = Math.floor(seconds / 60)
+            let sec = seconds - minutes * 60;
+            return minutes + ':' + sec
+        }
         
     },
     created(){
-        if(!checkToken(['admin', 'teacher'])) {
+        if(!checkToken(['student'])) {
             this.$router.push('/login');
         }
-    }
+        this.$socket.$subscribe('countdown-student', (data) => {
+            this.countDown = data
+        })
+        
+    },  
 }
 </script>
 <style scoped>

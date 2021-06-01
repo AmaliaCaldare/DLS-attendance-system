@@ -7,14 +7,15 @@ const SchedulePage = ()=> import("../views/Schedule.vue");
 const GenerateCodePage = ()=> import("../views/GenerateCode.vue");
 const CourseClasses = () => import("../views/CourseClasses.vue");
 const CreateUser = () => import("../views/CreateUser.vue")
+const EnterCode = () => import("../views/EnterCode.vue")
 
 
 const routes = [
-    // {
-    //     path: "/",
-    //     redirect: "/home",
-    //     name: "Home"
-    // },
+    {
+        path: "/",
+        redirect: "/courses",
+        name: "Home"
+    },
     {
         path: "/login",
         name: "Login",
@@ -47,8 +48,13 @@ const routes = [
     },
     {
         path: "/generate-code/:classId",
-        name: "Generate code",
+        name: "generate-code",
         component: GenerateCodePage
+    },
+    {
+        path: "/enter-code/:classId",
+        name: "enter-code",
+        component: EnterCode
     },
     {
         path: "/course/:courseId/classes",

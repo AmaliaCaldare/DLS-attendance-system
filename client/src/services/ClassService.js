@@ -19,7 +19,6 @@ export async function getClassesByCourseId(courseId) {
 export async function createClass(data = {}){
     const response = await fetch('/api/classes', {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
             token: localStorage.getItem('token')
