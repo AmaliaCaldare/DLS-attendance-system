@@ -6,7 +6,7 @@ It is a system meant to make it easier for students and teachers to check attend
 The project is divided in two parts: server and client.
 
 ### Server
-In order to start the server following commands:
+In order to start the server run following commands:
 
 ``` yarn install``` - to add all the dependencies of the server;
 
