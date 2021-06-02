@@ -9,7 +9,7 @@
                         <h4>{{courseClass.date}} - {{courseName}} - {{group.name}}</h4>
                     </b-col>
                     <b-col>
-                        <h2 class="text-right">average</h2>
+                        <h2 class="text-right">{{averageAttendance}} %</h2>
                     </b-col>
                 </b-row>
                 <b-table
@@ -44,14 +44,19 @@ export default {
             courseName: this.$route.params.course,
             group: {},
             students: [],
-            attendanceList: []
+            attendanceList: [],
+            averageAttendance: 0
         }
     },
    
     methods: {
         async calculateAverage(){
-            //const studentIdsInGroup = await this.group.students
-            
+            let checks = [];
+            this.attendanceList.forEach((result) => {
+                checks.push(result.attendanceCheck)
+            });
+            const attended = checks.filter(Boolean).length;
+            this.averageAttendance = attended/(this.attendanceList.length)*100
         }
         
     },
@@ -67,6 +72,7 @@ export default {
                 let student = await getStudentById(record.studentId)
                 this.students.push({studentName: student.name, attendance: record.attendanceCheck})
             })
+            this.calculateAverage()
 
         }  
                 
