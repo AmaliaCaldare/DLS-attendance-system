@@ -136,6 +136,7 @@ export default {
         } else {
             this.userRole = localStorage.getItem('role')
             this.user = JSON.parse(localStorage.getItem('user'))
+            console.log(new Date());
         }    
     },
     beforeMount() {
