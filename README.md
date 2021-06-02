@@ -1,7 +1,7 @@
 ## School attendance system 
- 
-This project is part of the Mandatory two assignment of the DLS class, as well as the base of our final project for this class.
-The project consists of a school attendance system, made for school administration, teachers, as well as students.
+
+This project is our final project for the DLS course.
+It is a system meant to make it easier for students and teachers to check attendance at a course.
 
 The project is divided in two parts: server and client.
 
