@@ -13,7 +13,7 @@ In order to start the server run following commands:
 ``` yarn run dev``` - to start the server.
 
 ### Client
-In order to start the clint run the following commands:
+In order to start the client run the following commands:
 
 ```yarn install``` - to add all the dependencies of the client;
 
