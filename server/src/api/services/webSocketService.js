@@ -20,13 +20,13 @@ const emitCode = async () => {
       const code = generateCode();
       socket.emit(`code`, code);
       socket.broadcast.emit(`check`, code);
+      socket.broadcast.emit(`class`, data);
       let minutes = 1;
       let seconds = 0;
       let outOfTime = false;
       const startCountdown = setInterval(async () => {
         if (seconds === 0) {
           minutes -= 1;
-
           seconds = 60;
         }
         if (minutes === 0) {

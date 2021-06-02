@@ -32,20 +32,25 @@ export default {
             enteredCode: "",
             message: "",
             generatedCode: "",
-            user: {}
+            user: {},
+            generatedCodeClassId: ""
           
         }
     },
     sockets: {
-        check(data){
-            this.generatedCode = data
+        check(code){
+            this.generatedCode = code
+        },
+        class(codeClass){
+            console.log(codeClass);
+            this.generatedCodeClassId = codeClass._id
         }
     },
     methods: {
         onSubmit(event){
             event.preventDefault()
-            if((this.generatedCode === this.enteredCode) && (this.countDown !== 'over')){
-                console.log(this.$route.params.classId);
+            if((this.generatedCode === this.enteredCode) && (this.countDown !== 'over') && 
+            (this.generatedCodeClassId === this.$route.params.classId)){
                 updateAttendanceList(this.$route.params.classId, {studentId: this.user._id, check: true}).then(() => {
                     const today = new Date();
                     const time = today.getHours() + ":" + today.getMinutes()
